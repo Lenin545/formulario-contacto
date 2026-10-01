@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #e8e3e7; text-align: center; }
+        .caja { display: inline-block; vertical-align: top; width: 420px; max-width: 90%; background: #1d9d9f;
+                border: 1px solid #ccc; border-radius: 10px; padding: 20px; margin: 10px; }
+        input, textarea { width: 90%; padding: 10px; margin: 5px 0 15px; border: 1px solid #e4141b; border-radius: 6px; text-align: center; }
+        button { width: 90%; padding: 12px; background: #25d366; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        iframe { width: 100%; height: 400px; border: 0; }
+    </style>
+</head>
+<body>
+    <h1>Formulario</h1>
+    <p>Rellene los siguientes campos de favor</p>
+
+    <form class="caja" id="formulario">
+        <h3>INGRESE SU NOMBRE COMPLETO</h3>
+        <input id="nombre" type="text" placeholder="nombre completo" maxlength="20" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" required>
+
+        <h3>INGRESE SU NUMERO DE TEL</h3>
+        <input id="telefono" type="tel" placeholder="numero de telefono" maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+
+        <h3>INGRESE SU CORREO DE GMAIL</h3>
+        <input id="correo" type="email" placeholder="correo electronico" maxlength="30" required>
+
+        <h3>DA UN COMENTARIO</h3>
+        <textarea id="comentario" placeholder="comentario" maxlength="120" required></textarea>
+
+        <h3>CAPTCHA: ¿Cuánto es <span id="pregunta"></span>?</h3>
+        <input id="respuesta" type="number" placeholder="resultado" required>
+
+        <button type="submit">ENVIAR POR WHATSAPP</button>
+    </form>
+
+    <div class="caja">
+        <h3>UBICACIÓN</h3>
+        <iframe src="https://maps.google.com/maps?q=UATV%20Tulcingo%20de%20Valle%2C%20Puebla&z=16&output=embed"></iframe>
+    </div>
+
+    <script>
+        let a = Math.floor(Math.random() * 10) + 1;
+        let b = Math.floor(Math.random() * 10) + 1;
+        document.getElementById("pregunta").textContent = a + " + " + b;
+
+        document.getElementById("formulario").onsubmit = function (e) {
+            e.preventDefault();
+
+            if (Number(document.getElementById("respuesta").value) !== a + b) {
+                alert("Captcha incorrecto");
+                return;
+            }
+
+            let texto = "Nombre: " + document.getElementById("nombre").value +
+                        "\nTeléfono: " + document.getElementById("telefono").value +
+                        "\nCorreo: " + document.getElementById("correo").value +
+                        "\nComentario: " + document.getElementById("comentario").value;
+
+            window.open("https://wa.me/527571155692?text=" + encodeURIComponent(texto));
+        };
+    </script>
+</body>
+</html>
